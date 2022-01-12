@@ -16,14 +16,14 @@
 		"text": "Are you writing for a qualified donee within Canada?",
 		"url": "https://www.canada.ca/en/revenue-agency/services/charities-giving/charities/policies-guidance/qualified-donees.html",
 		"type": "bool",
-		"triggers": [{
+		"triggers": {
 			"filter": "false",
-			"effects": [{
+			"effects": {
 				"valence": "disqualifies",
 				"type": "grant",
 				"uid": 1
-			}]
-		}],
+			}
+		},
 		"children": [0]
 	}, {
 		"uid": 2,
@@ -41,14 +41,14 @@
 		"uid": 3,
 		"text": "Are you writing for an educational institution, including post-secondary?",
 		"type": "bool",
-		"triggers": [{
+		"triggers": {
 			"filter": "true",
-			"effects": [{
+			"effects": {
 				"valence": "qualifies",
 				"type": "grant",
 				"uid": 0
-			}]
-		}],
+			}
+		},
 		"children": 14
 	}, {
 		"uid": 4,
