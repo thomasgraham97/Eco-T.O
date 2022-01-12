@@ -1,0 +1,371 @@
+{
+	"questions": [{
+		"uid": 0,
+		"text": "Are you writing for a registered charity?",
+		"type": "bool",
+		"triggers": [{
+			"filter": "true",
+			"effects": [{
+				"valence": "qualifies",
+				"type": "grant",
+				"uid": [0, 5, 6]
+			}]
+		}]
+	}, {
+		"uid": 1,
+		"text": "Are you writing for a qualified donee within Canada?",
+		"url": "https://www.canada.ca/en/revenue-agency/services/charities-giving/charities/policies-guidance/qualified-donees.html",
+		"type": "bool",
+		"triggers": [{
+			"filter": "false",
+			"effects": [{
+				"valence": "disqualifies",
+				"type": "grant",
+				"uid": 1
+			}]
+		}],
+		"children": [0]
+	}, {
+		"uid": 2,
+		"text": "Are you writing for a municipality?",
+		"type": "bool",
+		"triggers": [{
+			"filter": "true",
+			"effects": [{
+				"valence": "qualifies",
+				"type": "grant",
+				"uid": [0, 5]
+			}]
+		}]
+	}, {
+		"uid": 3,
+		"text": "Are you writing for an educational institution, including post-secondary?",
+		"type": "bool",
+		"triggers": [{
+			"filter": "true",
+			"effects": [{
+				"valence": "qualifies",
+				"type": "grant",
+				"uid": 0
+			}]
+		}],
+		"children": 14
+	}, {
+		"uid": 4,
+		"text": "Are you writing for an organization led by Indigenous people?",
+		"type": "bool",
+		"triggers": [{
+			"filter": "true",
+			"effects": [{
+				"valence": "qualifies",
+				"type": "grant",
+				"uid": [0, 4, 5, 6]
+			}, {
+				"valence": "disqualifies",
+				"type": "grant",
+				"uid": 6
+			}]
+		}]		
+	}, {
+		"uid": 5,
+		"text": "Are you looking for personal funding or are you representing an organization?",
+		"type": "enum",
+		"values": ["I am representing myself", "I am representing an organization"],
+		"triggers": [{
+			"filter": "I am representing myself",
+			"effects": [{
+				"valence": "qualifies",
+				"type": "grant",
+				"uid": [0, 5, 6, 15]
+			}]
+		}, {
+			"filter": "I am representing an organization",
+			"effects": [{
+				"valence": "activates",
+				"type": "children"
+			}]
+		}],
+		"children": [1, 2, 3, 4]
+	}, {
+		"uid": 6,
+		"text": "Are you funding a community garden?",
+		"type": "bool",
+		"children": [7, 8, 9, 10, 11, 12, 14]
+	}, {
+		"uid": 7,
+		"text": "Does your garden address an environmental issue?",
+		"type": "bool",
+		"triggers": [{
+			"filter": "true",
+			"effects": [{
+				"valence": "qualifies",
+				"type": "grant",
+				"uid": 0
+			}]
+		}]		
+	}, {
+		"uid": 8,
+		"text": "Does your garden engage local schools, Indigenous groups/communities, seniors, families, or the general community?",
+		"type": "bool",
+		"triggers": [{
+			"filter": "true",
+			"effects": [{
+				"valence": "qualifies",
+				"type": "grant",
+				"uid": 0
+			}]
+		}]
+	}, {
+		"uid": 9,
+		"text": "Does your garden have an educational or workshop component?",
+		"type": "bool",
+		"triggers": [{
+			"filter": "true",
+			"effects": [{
+				"valence": "qualifies",
+				"type": "grant",
+				"uid": 0
+			}]
+		}]
+	}, {
+		"uid": 10,
+		"text": "Is the garden accessible to people with disabilities or limited mobility?",
+		"type": "bool",
+		"triggers": [{
+			"filter": "true",
+			"effects": [{
+				"valence": "qualifies",
+				"type": "grant",
+				"uid": 0
+			}]
+		}]		
+	}, {
+		"uid": 11,
+		"text": "Have  you secured permission to use the land?",
+		"type": "bool",
+		"triggers": [{
+			"filter": "false",
+			"effects": [{
+				"valence": "warn",
+				"type": "grant",
+				"uid": 0
+			}]
+		}]		
+	}, {
+		"uid": 12,
+		"text": "Are you planting vegetables?",
+		"type": "bool",
+		"children": 13
+	}, {
+		"uid": 13,
+		"text": "Do you have a plan for how the crops will be used?",
+		"type": "bool",
+		"triggers": [{
+			"filter": "true",
+			"effects": [{
+				"valence": "qualifies",
+				"type": "grant",
+				"uid": 0
+			}]
+		}]		
+	}, {
+		"uid": 14,
+		"text": "Do you have a plan for how the garden will be maintained over the summer months?",
+		"type": "bool",
+		"triggers": [{
+			"filter": "true",
+			"effects": [{
+				"valence": "qualifies",
+				"type": "grant",
+				"uid": 0
+			}]
+		}]		
+	}, {
+		"uid": 15,
+		"text": "Are you an environmental education project?",
+		"type": "bool",
+		"children": [16, 18, 19]
+	}, {
+		"uid": 16,
+		"text": "Does the project involve any physical alterations to school grounds?",
+		"type": "bool",
+		"children": 17
+	}, {
+		"uid": 17,
+		"text": "Have you been authorized to make these alterations?",
+		"type": "bool",
+		"triggers": [{
+			"filter": "false",
+			"effects": [{
+				"valence": "disqualifies",
+				"type": "grant",
+				"uid": 0
+			}]
+		}]
+	}, {
+		"uid": 18,
+		"text": "Is the project about environmental issues that are relevant to the local community?",
+		"type": "bool",
+		"triggers": [{
+			"filter": "true",
+			"effects": [{
+				"valence": "qualifies",
+				"type": "grant",
+				"uid": 0
+			}]
+		}]		
+	}, {
+		"uid": 19,
+		"text": "Is this a school project?",
+		"type": "bool",
+		"children": 20	
+	}, {
+		"uid": 20,
+		"text": "Does this project have curricular ties?",
+		"type": "bool",
+		"triggers": [{
+			"filter": "true",
+			"effects": [{
+				"valence": "qualifies",
+				"type": "grant",
+				"uid": 0
+			}]
+		}]
+	}, {
+		"uid": 21,
+		"text": "Is this a tree planting or urban greening project?",
+		"type": "bool",
+		"children": [22, 23]	
+	}, {
+		"uid": 22,
+		"text": "Does the project involve community volunteers?",
+		"type": "bool",
+		"triggers": [{
+			"filter": "false",
+			"effects": [{
+				"valence": "warn",
+				"type": "grant",
+				"uid": 0
+			}]
+		}]
+	}, {
+		"uid": 23,
+		"text": "Will you be planting non-native species?",
+		"type": "bool",
+		"children": 24
+	}, {
+		"uid": 24,
+		"text": "Do you have a list prepared on native or non-native plants will used and why?",
+		"type": "bool",
+		"triggers": [{
+			"filter": "false",
+			"effects": [{
+				"valence": "warn",
+				"type": "grant",
+				"uid": 0
+			}]
+		}]	
+	}, {
+		"uid": 25,
+		"text": "Does the project involve outdoor classrooms and nature play?",
+		"type": "bool",
+		"children": [26, 27, 28, 29, 30, 31]
+	}, {
+		"uid": 26,
+		"text": "Is a school and/or the community involved with building the outdoor classroom?",
+		"type": "bool",
+		"triggers": [{
+			"filter": "true",
+			"effects": [{
+				"valence": "qualifies",
+				"type": "grant",
+				"uid": 0
+			}]
+		}]
+	}, {
+		"uid": 27,
+		"text": "Have you received permission for this project from the school board?",
+		"type": "bool",
+		"triggers": [{
+			"filter": "false",
+			"effects": [{
+				"valence": "disqualifies",
+				"type": "grant",
+				"uid": 0
+			}]
+		}]		
+	}, {
+		"uid": 28,
+		"text": "Will the outdoor classroom host courses / workshops?",
+		"type": "bool",
+		"triggers": [{
+			"filter": "true",
+			"effects": [{
+				"valence": "qualifies",
+				"type": "grant",
+				"uid": 0
+			}]
+		}]	
+	}, {
+		"uid": 29,
+		"text": "Will teachers be encouraged to use the space?",
+		"type": "bool",
+		"triggers": [{
+			"filter": "true",
+			"effects": [{
+				"valence": "qualifies",
+				"type": "grant",
+				"uid": 0
+			}]
+		}]		
+	}, {
+		"uid": 30,
+		"text": "Will there be a planting component to the outdoor classroom?",
+		"type": "bool",
+		"triggers": [{
+			"filter": "true",
+			"effects": [{
+				"valence": "qualifies",
+				"type": "grant",
+				"uid": 0
+			}]
+		}],
+		"children": 32
+	}, {
+		"uid": 32,
+		"text": "Is there a plan for how the plantings will be maintained over the summer months?",
+		"type": "bool",
+		"triggers": [{
+			"filter": "true",
+			"effects": [{
+				"valence": "qualifies",
+				"type": "grant",
+				"uid": 0
+			}]
+		}]			
+	}, {
+		"uid": 31,
+		"text": "Will the outdoor classroom be shared with the community?",
+		"type": "bool",
+		"triggers": [{
+			"filter": "true",
+			"effects": [{
+				"valence": "qualifies",
+				"type": "grant",
+				"uid": 0
+			}]
+		}]		
+	}, {
+		"uid": 33,
+		"text": "Are you a previous Market Greens Grant Partner?",
+		"type": "bool",
+		"triggers": [{
+			"filter": "true",
+			"effects": [{
+				"valence": "disqualifies",
+				"type": "grant",
+				"uid": 1
+			}]
+		}]
+	}]
+}
