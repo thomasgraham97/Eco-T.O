@@ -1,53 +1,73 @@
-let model;
-
 class Model {
 	constructor(expenses, grants, questions) {
-		this.expenses = expenses;
-		this.questions = questions;
-		this.grants = grants.map ( function(e) {
+		Model.expenses = expenses;
+		Model.questions = questions;
+		Model.grants = grants.map ( function(e) {
 			let newGrant = new Grant(e);
-			newGrant.questions = assignQuestionsToGrant(newGrant.uid, questions);
+			newGrant.questions = Model.#assignQuestionsToGrant(newGrant.uid);
 			return newGrant;
 		});
+	}
 
-		/*assignQuestionsToGrant:
-		* Sets up the 'questions' property inside the Grant instance.
-		* grantId: The ID to search for in the Questions array.
-		* questions: The Questions array.
-		*/
-		function assignQuestionsToGrant(grantId, questions) {
-			let acc = [];
-			for (let question of questions) {
-				if (testTriggers(question) ) {
-					acc.push(question.uid);
-				}
+	static getExpense(id) { 
+		return Model.getElementById(Model.expenses, id)
+	}
+
+	static getGrant(id) {
+		return Model.getElementById(Model.grants, id)
+	}
+
+	static getQuestion(id) {
+		return Model.getElementById(Model.questions, id)
+	}
+
+	static getElementById(arr, id) {
+		return arr.find( function(e) {
+			return e.uid == id;
+		});	
+	}
+
+	/*assignQuestionsToGrant:
+	* Sets up the 'questions' property for each Grant instance.
+	* Something of a kludge since we're using JSON instead of a
+	* DB.
+	* Private method.
+	* grantId: The ID to search for in the Questions array.
+	* questions: The Questions array.
+	* Returns array of scalars.
+	*/
+	static #assignQuestionsToGrant(grantId) {
+		let acc = [];
+		for (let question of Model.questions) {
+			if (testTriggers(question) ) {
+				acc.push(question.uid);
 			}
-			function testTriggers(question) {
-				if (question.triggers) {
-					return filterComposite( question.triggers, function(trigger) {
-							return testEffects(trigger);
-						}
-					);
-				}
-				return false;
-			}
-			function testEffects(trigger) {
-				return filterComposite( trigger.effects, function (effect) {
-						return testUids(effect);
+		}
+		function testTriggers(question) {
+			if (question.triggers) {
+				return filterComposite( question.triggers, function(trigger) {
+						return testEffects(trigger);
 					}
 				);
 			}
-			function testUids(effect) {
-				if (effect.type == "grant") {
-					return filterComposite( effect.uid, function(uid) {
-							return uid == grantId;
-						} 
-					);
-				}
-			}
-			
-			return acc;
+			return false;
 		}
+		function testEffects(trigger) {
+			return filterComposite( trigger.effects, function (effect) {
+					return testUids(effect);
+				}
+			);
+		}
+		function testUids(effect) {
+			if (effect.type == "grant") {
+				return filterComposite( effect.uid, function(uid) {
+						return uid == grantId;
+					} 
+				);
+			}
+		}
+		
+		return acc;
 	}
 }
 
@@ -68,10 +88,10 @@ class Grant {
 			ineligible: []
 		}
 		for (let expense of this.expenses.eligible) {
-			acc.eligible.push(getExpense(expense) ).value;
+			acc.eligible.push(Model.getExpense(expense) ).value;
 		}
 		for (let expense of this.expenses.ineligible) {
-			acc.ineligible.push(getExpense(expense) ).value;
+			acc.ineligible.push(Model.getExpense(expense) ).value;
 		}
 		return acc;
 	}
@@ -79,7 +99,7 @@ class Grant {
 	getQuestions() {
 		let acc = [];
 		for (let question of this.questions) {
-			let foo = getQuestion(question);
+			let foo = Model.getQuestion(question);
 			acc.push ({
 				text: foo.text,
 				triggers: foo.triggers
@@ -93,7 +113,7 @@ window.addEventListener("load", async function() {
 	let expenses = await loadJSON('expenses.json');
 	let grants = await loadJSON('grants.json');	
 	let questions = await loadJSON('questions.json');
-	model = new Model (expenses.expenses, grants.grants, questions.questions);
+	let model = new Model (expenses.expenses, grants.grants, questions.questions);
 });
 
 
@@ -123,22 +143,4 @@ function filterComposite(composite, filter) {
 async function loadJSON(url) {
 	let response = await fetch(url);
 	return await response.json();
-}
-
-function getExpense(id) { 
-		return getElementById(this.expenses, id)
-	}
-
-function getGrant(id) {
-		return getElementById(this.grants, id)
-	}
-
-function getQuestion(id) {
-		return getElementById(this.questions, id)
-	}
-
-function getElementById(arr, id) {
-	return arr.find( function(e) {
-		return e.uid == id;
-	});	
 }
