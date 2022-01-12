@@ -1,0 +1,145 @@
+{
+	"grants": [{
+		"uid": 0,
+		"organizationName": "TD Bank",
+		"grantName": "TD Friends of the Environment Foundation Grant",
+		"url": "https://www.td.com/ca/en/about-td/ready-commitment/funding/fef-grant/",
+		"lastUpdated": "2022-01-11",
+		"dates": [{
+			"key": "Winter submission",
+			"value": [{
+				"key": "Submission deadline",
+				"value": "2022-01-15"
+			}, {
+				"key": "Regional advisory board meeting",
+				"value": "2022-03-01"
+			}, {
+				"key": "Applicants notified",
+				"value": "2022-04-01"
+			}]
+		}, {
+			"key": "Summer submission",
+			"value": [{
+				"key": "Submission deadline",
+				"value": "2022-07-15"
+			}, {
+				"key": "Regional advisory board meeting",
+				"value": "2022-09-01"
+			}, {
+				"key": "Applicants notified",
+				"value": "2022-10-01"
+			}]
+		}],
+		"offer": [{
+			"key": "Soft minimum",
+			"amount": "2000"
+		}, {
+			"key": "Soft maximum",
+			"amount": "8000"
+		}],
+		"expenses": {
+			"eligible": [],
+			"ineligible": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+		}
+	}, {
+		"uid": 1,
+		"organizationName": "Community Food Centres Canada",
+		"grantName": "Market Greens Grant",
+		"url": "https://cfccanada.smapply.ca/prog/market_greens_partner_grants_cohort_2/",
+		"lastUpdated": "2022-01-11",
+		"dates": [{
+			"key": "Submissions begin",
+			"value": "2021-11-08"
+		}, {
+			"key": "Submissions deadline",
+			"value": "2022-01-21"
+		}, {
+			"key": "Recipients notified",
+			"value": "2022-02-01"
+		}, {
+			"key": "Grant agreements finalized",
+			"value": "2022-03-01"
+		}, {
+			"key": "Grant begins",
+			"value": "2022-04-01"
+		}],
+		"offer": {
+			"amount": "70000",
+			"term": "2 years"
+		},
+		"expenses": {
+			"eligible": [10, 15, 18, 20],
+			"ineligible": [16, 17, 19, 0, 3]
+		}
+	}],
+	"expenses": [ {
+			"key": 0,
+			"value": "Capital costs"
+		}, {
+			"key": 1,
+			"value": "Administrative costs"
+		}, {
+			"key": 2,
+			"value": "Contingency funds"
+		}, {
+			"key": 3,
+			"value": "General operating expenses",
+			"children": [15]
+		}, {
+			"key": 4,
+			"value": "Shade structures, playground equipment, beautification"
+		}, {
+			"key": 5,
+			"value": "Conferences"
+		}, {
+			"key": 6,
+			"value": "Land acquisition"
+		}, {
+			"key": 7,
+			"value": "Advocacy-related expenses"
+		}, {
+			"key": 8,
+			"value": "Scholarships, grants or bursaries"
+		}, {
+			"key": 9,
+			"value": "Awards and prizes"
+		}, {
+			"key": 10,
+			"value": "Mileage, accommodation, meal costs or other travel expenses",
+			"children": [17]
+		}, {
+			"key": 11,
+			"value": "Expenses incurred prior to the application date"
+		}, {
+			"key": 12,
+			"value": "Projects taking place outside of Canada"
+		}, {
+			"key": 13,
+			"value": "Research projects"
+		}, {
+			"key": 14,
+			"value": "Pesticides for any use"
+		}, {
+			"key": 15,
+			"value": "Related staffing and contractor costs"
+			"children": [16, 20]
+		}, {
+			"key": 16,
+			"value": "Performance and severance pay; maternity and absence pay; individual staff benefits exceeding 20%"
+		}, {
+			"key": 17,
+			"value": "Travel and hospitality expenses that exceed the National Joint Travel Council Directive",
+			"url": "https://www.njc-cnm.gc.ca/directive/d10/en"
+		}, {
+			"key": 18,
+			"value": "Rentals, materials, supplies and equipment"
+			"children": [19]
+		}, {
+			"key": 19,
+			"value": "Rental charges for recipient-owned equipment or spaces"
+		}, {
+			"key": 20,
+			"value": "Staff and volunteer training"
+		}
+	]
+}
