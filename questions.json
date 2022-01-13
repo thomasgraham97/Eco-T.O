@@ -5,11 +5,11 @@
 		"type": "bool",
 		"triggers": [{
 			"filter": "true",
-			"effects": [{
+			"effects": {
 				"valence": "qualifies",
 				"type": "grant",
 				"uid": [0, 5, 6]
-			}]
+			}
 		}]
 	}, {
 		"uid": 1,
@@ -31,11 +31,11 @@
 		"type": "bool",
 		"triggers": [{
 			"filter": "true",
-			"effects": [{
+			"effects": {
 				"valence": "qualifies",
 				"type": "grant",
 				"uid": [0, 5]
-			}]
+			}
 		}]
 	}, {
 		"uid": 3,
@@ -67,23 +67,16 @@
 		}]		
 	}, {
 		"uid": 5,
-		"text": "Are you looking for personal funding or are you representing an organization?",
-		"type": "enum",
-		"values": ["I am representing myself", "I am representing an organization"],
-		"triggers": [{
-			"filter": "I am representing myself",
+		"text": "Are you looking for personal funding?",
+		"type": "bool",
+		"triggers": {
+			"filter": "true",
 			"effects": [{
-				"valence": "qualifies",
+				"valence": "disqualifies",
 				"type": "grant",
-				"uid": [0, 5, 6, 15]
+				"uid": [0, 5, 6, 1]
 			}]
-		}, {
-			"filter": "I am representing an organization",
-			"effects": [{
-				"valence": "activates",
-				"type": "children"
-			}]
-		}],
+		},
 		"children": [1, 2, 3, 4]
 	}, {
 		"uid": 6,

@@ -22,10 +22,10 @@
 			<p id = "question-text">Question</p>
 			<form id = "question-form">
 				<div id = "question-container">
-					<label for  = "boolean-0">Yes</label>
-					<input type = "radio" id = "boolean-0" name = "boolean">
-					<label for  = "boolean-0">No</label>
+					<label for  = "boolean-1">Yes</label>
 					<input type = "radio" id = "boolean-1" name = "boolean">
+					<label for  = "boolean-0">No</label>
+					<input type = "radio" id = "boolean-0" name = "boolean">
 				</div>
 				<input type = "submit" id = "question-form-skip" value = "Skip">
 				<input type = "submit" id = "question-form-submit" value = "Submit">

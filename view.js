@@ -5,11 +5,14 @@
 
 class View {
 	constructor(questionInterface, matchesInterface) {
-		View.questionCounter = questionInterface.querySelector("#query-counter");
+		View.questionCounter = questionInterface.querySelector("#question-counter");
 		View.questionText = questionInterface.querySelector("#question-text");
 		View.questionContainer = questionInterface.querySelector("#question-container");
 		View.questionSkip = questionInterface.querySelector("#question-form-skip");
 		View.questionSubmit = questionInterface.querySelector("#question-form-submit");
+		
+		View.yesAnswer = questionInterface.querySelector("#boolean-1");
+		View.noAnswer = questionInterface.querySelector("#boolean-0");		
 		
 		View.matchesCounter = matchesInterface.querySelector("#matches-counter");
 		View.matchesContainer = matchesInterface.querySelector("#matches-container");
@@ -21,28 +24,26 @@ class View {
 		});
 		View.questionSubmit.addEventListener("click", function(e) {
 			e.preventDefault();
-			Controller.answerQuestion("Yes");
+			Controller.answerQuestion(View.yesAnswer.checked);
 			Controller.getNextQuestion();			
+		});
+		View.yesAnswer.addEventListener("click", function(e) {
+			View.questionSubmit.disabled = false;
+		});
+		View.noAnswer.addEventListener("click", function(e) {
+			View.questionSubmit.disabled = false;
 		});
 	}
 	
 	static listQuestion(question) {
 		View.questionText.innerText = question.text;
+		View.yesAnswer.checked = false;
+		View.noAnswer.checked = false;
+		View.questionSubmit.disabled = true;
 	}
 	
-	static listTopGrants(quantity) {
-		for (let i = 0; i < quantity; i++) {
-				View.listGrant(i);
-		}
-	}
-	
-	static listGrant(index) {
-		let grant = Model.getGrant(index);
-		if (grant) {
-			View.matchesContainer.innerText = grant.grantName;
-		} else {
-			console.warn("Attempted to access invalid grant!");
-		}
+	static listGrant(grant) {
+		View.matchesContainer.innerText = grant.grantName;
 	}
 }
 

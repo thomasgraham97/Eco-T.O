@@ -17,6 +17,8 @@ class Model {
 			return newGrant;
 		});
 	}
+	
+	static questionsAnswered = 0;
 
 	static getExpense(id) { 
 		return Model.#getElementById(Model.expenses, id)
@@ -90,16 +92,10 @@ class Model {
 	static #assignParentsToQuestion(questionId, questionArray) {
 		let acc = [];
 		for (let question of questionArray) {
-			if (question.children) {
-				if (Array.isArray(question.children) ) {
-					for (let child of question.children) {
-						if (child === questionId) {
-							acc.push(question.uid);
-						}
-					}
-				} else if (question.children === questionId) {
-					acc.push(question.uid);
-				}
+			if (question.children && filterComposite(question.children, function(child) {
+				return child === questionId;
+			})) {
+				acc.push(question.uid);
 			}
 		}
 		
@@ -116,6 +112,7 @@ class Grant {
 		this.dates = obj.dates; //Do something more sophisticated with this later
 		this.offer = obj.offer; //Ditto
 		this.expenses = obj.expenses;
+		this.score = 0;
 	}
 	
 	getExpenses() {
@@ -169,6 +166,36 @@ class Question {
 			}
 		}
 		return acc;
+	}
+
+	runTriggers() {
+		if (this.triggers) {
+			mapComposite(this.triggers, function(trigger) {
+				if (trigger.filter.toString() == this.answer.toString() ) {
+					mapComposite(trigger.effects, function(effect) {
+						if (effect.type == "grant") {
+							let grants = mapComposite(effect.uid, function(uid) {
+								return Model.getGrant(uid);
+							});
+							if (effect.valence == "qualifies") {
+								for (let grant of grants) {
+									grant.score++;
+								}
+							} else if (effect.valence == "warns") {
+								for (let grant of grants) {
+									grant.score--;
+								}
+							} else if (effect.valence == "disqualifies") {
+								console.log("DQ'd!");
+								for (let grant of grants) {
+									grant.disqualified = true;
+								}
+							}
+						}
+					});
+				}
+			}.bind(this));
+		}
 	}	
 }
 
@@ -179,16 +206,16 @@ window.addEventListener("load", async function() {
 	let model = new Model (expenses.expenses, grants.grants, questions.questions);
 });
 
-/** filterComposite: Returns a single value from a
+/** filterComposite: Returns a scalar value from a
 * composite (an object that can be treated the same
 * if it represents a leaf node or a branch.) Here,
 * we treat a leaf node as an array of objects or
 * scalars -- crude, but it does the job.
 *
 * composite: The composite to act on. : array | scalar
-* filter: The function to apply to the composite.
+* filter: The function to apply to the composite. : function
 *
-* Returns result of 'filter'.
+* Returns scalar result of 'filter'.
 */
 function filterComposite(composite, filter) {
 	if (Array.isArray(composite) ) {
@@ -199,6 +226,29 @@ function filterComposite(composite, filter) {
 		return acc;
 	} else {
 		return filter(composite);
+	}
+}
+
+/** mapComposite: Returns an array value from a
+* composite (an object that can be treated the same
+* if it represents a leaf node or a branch.) Here,
+* we treat a leaf node as an array of objects or
+* scalars -- crude, but it does the job.
+*
+* composite: The composite to act on. : array | scalar
+* filter: The function to apply to the composite. : function
+*
+* Returns array result of 'filter'.
+*/
+function mapComposite(composite, filter) {
+	if (Array.isArray(composite) ) {
+		let acc = [];
+		for (let scalar of composite) {
+			acc.push(filter(scalar) );
+		}
+		return acc;
+	} else {
+		return [filter(composite)];
 	}
 }
 
